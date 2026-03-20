@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능 기초 - 수업 랜딩페이지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // 초기 테마 설정 (깜빡임 방지)
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .glass-morphism {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hover-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .section-tab.active {
+            background-color: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-morphism shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-extrabold gradient-text">AI CLASS</div>
+            
+            <div class="hidden md:flex space-x-8 font-semibold text-slate-600 dark:text-slate-300">
+                <a href="#intro" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">소개</a>
+                <a href="#ethics" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">AI 윤리</a>
+                <a href="#programs" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">학습 프로그램</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="p-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all focus:outline-none">
+                    <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-xl"></i>
+                    <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-xl text-yellow-400"></i>
+                </button>
+                
+                <button class="bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition shadow-lg">
+                    수업 입장
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="intro" class="relative pt-40 pb-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                    인간과 기술의 공존,<br>
+                    <span class="gradient-text">인공지능의 세계</span>로
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    이번 학기 우리는 단순히 AI를 사용하는 것을 넘어,<br>
+                    AI가 우리 사회에 미치는 영향과 올바른 활용 방법을 배웁니다.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#ethics" class="bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-indigo-700 shadow-xl transition-all">시작하기</a>
+                    <a href="#programs" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">도구 살펴보기</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-80 h-80 md:w-96 md:h-96">
+                    <div class="absolute inset-0 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+                    <div class="relative bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl animate-float transition-colors">
+                        <svg class="w-full h-full text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Theme 1: AI Ethics -->
+    <section id="ethics" class="py-24 bg-white dark:bg-slate-900 transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest uppercase">Theme 01</span>
+                <h2 class="text-4xl font-bold mt-2">인공지능 윤리 (AI Ethics)</h2>
+                <div class="w-20 h-1.5 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Fairness -->
+                <div class="hover-card bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm transition-all cursor-default">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center rounded-xl mb-6 text-2xl">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">공정성 (Fairness)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        인공지능은 인종, 성별, 종교 등에 대한 편향성을 갖지 않아야 합니다. 데이터 수집 단계부터 알고리즘 설계까지 차별 없는 결과를 지향합니다.
+                    </p>
+                </div>
+
+                <!-- Transparency -->
+                <div class="hover-card bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm transition-all cursor-default">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center rounded-xl mb-6 text-2xl">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">투명성 (Transparency)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        AI가 왜 그런 결정을 내렸는지 설명할 수 있어야 합니다. '블랙박스' 문제를 해결하고 인간이 과정을 이해할 수 있도록 설계되어야 합니다.
+                    </p>
+                </div>
+
+                <!-- Responsibility -->
+                <div class="hover-card bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm transition-all cursor-default">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center rounded-xl mb-6 text-2xl">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">책임성 (Responsibility)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        AI의 행동으로 인한 결과에 대해 책임을 질 주체가 명확해야 합니다. 안전 가드레일을 구축하여 오남용을 방지하는 것이 핵심입니다.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 p-10 bg-indigo-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center transition-colors">
+                <a href="./01/index.html" class="bg-indigo-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-indigo-700 shadow-xl transition-all transform hover:scale-105">
+                    윤리적 딜레마
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theme 2: AI Learning Programs -->
+    <section id="programs" class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest uppercase">Theme 02</span>
+                <h2 class="text-4xl font-bold mt-2">인공지능 학습 프로그램</h2>
+                <div class="w-20 h-1.5 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="filterPrograms('all')" id="btn-all" class="section-tab active px-6 py-2 rounded-full font-semibold border border-indigo-200 dark:border-slate-700 transition">전체</button>
+                <button onclick="filterPrograms('block')" id="btn-block" class="section-tab px-6 py-2 rounded-full font-semibold border border-indigo-200 dark:border-slate-700 transition">블록 코딩</button>
+                <button onclick="filterPrograms('model')" id="btn-model" class="section-tab px-6 py-2 rounded-full font-semibold border border-indigo-200 dark:border-slate-700 transition">모델 학습</button>
+                <button onclick="filterPrograms('generative')" id="btn-generative" class="section-tab px-6 py-2 rounded-full font-semibold border border-indigo-200 dark:border-slate-700 transition">생성형 AI</button>
+            </div>
+
+            <div id="program-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Program 1 -->
+                <div class="program-card block model bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-colors">
+                    <div class="h-48 bg-indigo-100 dark:bg-indigo-900/20 flex items-center justify-center">
+                        <span class="text-4xl font-bold text-indigo-300 dark:text-indigo-700 uppercase">TM</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold">티쳐블 머신</h3>
+                            <span class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 text-xs font-bold px-2 py-1 rounded">모델 학습</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">이미지/오디오/포즈 데이터를 학습시켜 나만의 AI 모델을 만드는 도구입니다.</p>
+                        <a href="https://teachablemachine.withgoogle.com/" target="_blank" class="block text-center bg-slate-900 dark:bg-indigo-600 text-white py-3 rounded-xl hover:bg-slate-800 dark:hover:bg-indigo-700 transition">도구 열기 <i class="fas fa-external-link-alt ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Program 2 -->
+                <div class="program-card block bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-colors">
+                    <div class="h-48 bg-pink-100 dark:bg-pink-900/20 flex items-center justify-center text-4xl font-bold text-pink-300 dark:text-pink-700 uppercase">
+                        ENTRY
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold">엔트리 AI</h3>
+                            <span class="bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 text-xs font-bold px-2 py-1 rounded">블록 코딩</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">다양한 인공지능 블록을 활용하여 번역, 영상 인식 등을 실습합니다.</p>
+                        <a href="https://playentry.org/" target="_blank" class="block text-center bg-slate-900 dark:bg-indigo-600 text-white py-3 rounded-xl hover:bg-slate-800 dark:hover:bg-indigo-700 transition">도구 열기 <i class="fas fa-external-link-alt ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Program 3 -->
+                <div class="program-card generative bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-colors">
+                    <div class="h-48 bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center text-4xl font-bold text-emerald-300 dark:text-emerald-700 uppercase">
+                        GEMINI
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold">생성형 AI</h3>
+                            <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-xs font-bold px-2 py-1 rounded">생성형 AI</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">프롬프트 엔지니어링을 통해 AI와 소통하는 방법을 익히고 학습에 활용합니다.</p>
+                        <a href="#" class="block text-center bg-slate-900 dark:bg-indigo-600 text-white py-3 rounded-xl hover:bg-slate-800 dark:hover:bg-indigo-700 transition">가이드 보기 <i class="fas fa-book ml-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 dark:bg-black text-slate-400 py-12 px-6 transition-colors">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <span class="text-2xl font-bold text-white mb-2 block">AI CLASS 2024</span>
+                <p>정보 선생님과 함께하는 인공지능 기초 수업</p>
+            </div>
+            <div class="flex space-x-6 text-xl">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-github"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-sm">
+            &copy; 2024 Informatics Class. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // 테마 토글 요소 제어
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // 테마 상태에 따른 아이콘 변경 함수
+        function updateIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            }
+        }
+
+        updateIcons(); // 초기 실행
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            // 테마 토글 및 저장
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            updateIcons();
+        });
+
+        // 프로그램 필터링 함수
+        function filterPrograms(category) {
+            const cards = document.querySelectorAll('.program-card');
+            const buttons = document.querySelectorAll('.section-tab');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + category).classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
