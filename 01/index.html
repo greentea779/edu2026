@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능 윤리 인터랙티브 학습</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+        body { font-family: 'Pretendard', sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white">
+                    <i data-lucide="scale"></i>
+                </div>
+                <h1 class="text-xl font-black tracking-tight text-slate-800 uppercase">AI Ethics Lab</h1>
+            </div>
+            
+            <nav id="main-nav" class="flex gap-1 bg-slate-100 p-1 rounded-full overflow-x-auto scrollbar-hide">
+                <a href="../index.html" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap text-slate-500 hover:text-slate-800 hover:bg-white/50">
+                    <i data-lucide="home" class="w-4 h-4"></i> 홈
+                </a>
+                <button onclick="app.setActiveTab('intro')" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap" data-tab="intro">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Start
+                </button>
+                <button onclick="app.setActiveTab('bias')" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap" data-tab="bias">
+                    <i data-lucide="brain" class="w-4 h-4"></i> 편향성
+                </button>
+                <button onclick="app.setActiveTab('trolley')" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap" data-tab="trolley">
+                    <i data-lucide="car" class="w-4 h-4"></i> 딜레마
+                </button>
+                <button onclick="app.setActiveTab('priority')" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap" data-tab="priority">
+                    <i data-lucide="globe" class="w-4 h-4"></i> 우선순위
+                </button>
+                <button onclick="app.setActiveTab('quiz')" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap" data-tab="quiz">
+                    <i data-lucide="trophy" class="w-4 h-4"></i> 퀴즈
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="content" class="max-w-6xl mx-auto px-6 py-12 flex-grow animate-fade-in">
+        <!-- JS가 여기에 콘텐츠를 렌더링합니다 -->
+    </main>
+
+    <!-- Infographic Modal -->
+    <div id="modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center modal-backdrop p-4" onclick="app.toggleModal(false)">
+        <div class="relative bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="image" class="text-indigo-600 w-5 h-5"></i> 인공지능의 두 얼굴: 편향성과 윤리적 딜레마
+                </h3>
+                <button onclick="app.toggleModal(false)" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-500">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-2 overflow-auto bg-slate-50">
+                <img src="특강03.jpg" alt="인포그래픽" class="w-full h-auto rounded-lg shadow-sm" onerror="this.src='https://placehold.co/1200x800?text=특강03.jpg+Not+Found'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 px-6">
+        <div class="max-w-6xl mx-auto text-center space-y-4">
+            <div class="flex justify-center gap-8 mb-8">
+                <div class="text-center">
+                    <div class="text-white font-bold text-2xl">2.3M+</div>
+                    <div class="text-xs uppercase tracking-widest">Global Participants</div>
+                </div>
+                <div class="text-center border-l border-slate-700 pl-8">
+                    <div class="text-white font-bold text-2xl">233</div>
+                    <div class="text-xs uppercase tracking-widest">Countries Studied</div>
+                </div>
+            </div>
+            <p class="text-sm">"인공지능 윤리는 기술의 한계를 설정하는 것이 아니라, 기술이 인간의 존엄성을 향하도록 만드는 나침반입니다."</p>
+            <p class="text-xs font-mono opacity-50 uppercase mt-8">&copy; 2024 AI Ethics Interactive Learning Guide</p>
+        </div>
+    </footer>
+
+    <script>
+        const app = {
+            activeTab: 'intro',
+            quizStep: 0,
+            score: 0,
+            trolleyChoice: null,
+            quizQuestions: [
+                {
+                    question: "인공지능이 편향성을 갖게 되는 근본적인 이유는 무엇인가요?",
+                    options: ["기계의 감정 상태 때문", "인간이 만든 데이터와 알고리즘 기반 학습 때문", "인공지능이 스스로 자아를 가졌기 때문", "하드웨어 성능 부족 때문"],
+                    answer: 1
+                },
+                {
+                    question: "트롤리 딜레마 '선로 전환기' 사례에서 1명을 희생시켜 5명을 구하는 것에 찬성한 비율은 약 몇 %였나요?",
+                    options: ["11%", "50%", "89%", "100%"],
+                    answer: 2
+                },
+                {
+                    question: "MIT 모럴 머신 프로젝트 결과, 인류가 가장 우선적으로 보호하고자 한 대상 1위는?",
+                    options: ["남성 의사", "임신한 여성", "어린 소녀", "유모차를 끄는 사람"],
+                    answer: 3
+                },
+                {
+                    question: "서구권과 달리 동양권 국가에서 자율주행 윤리 판단 시 상대적으로 더 중시한 가치는?",
+                    options: ["동물의 생명 보호", "노인에 대한 보호", "운전자의 생명 보호", "법규 준수"],
+                    answer: 1
+                },
+                {
+                    question: "인공지능 윤리의 역할로 가장 적절한 설명은?",
+                    options: ["기술 발전을 완전히 중단시키는 장치", "기계에게 감정을 부여하는 프로그래밍", "기술이 인간의 존엄성을 향하게 만드는 나침반", "단순한 소프트웨어 오류 수정 작업"],
+                    answer: 2
+                }
+            ],
+
+            init() {
+                this.setActiveTab('intro');
+                lucide.createIcons();
+            },
+
+            setActiveTab(tabId) {
+                this.activeTab = tabId;
+                this.render();
+                
+                // Update nav buttons
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    if (btn.dataset.tab === tabId) {
+                        btn.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+                        btn.classList.remove('text-slate-500');
+                    } else {
+                        btn.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
+                        btn.classList.add('text-slate-500');
+                    }
+                });
+            },
+
+            toggleModal(show) {
+                const modal = document.getElementById('modal');
+                if (show) {
+                    modal.classList.remove('hidden');
+                } else {
+                    modal.classList.add('hidden');
+                }
+            },
+
+            handleTrolleyChoice(choice) {
+                this.trolleyChoice = choice;
+                this.render();
+            },
+
+            handleQuizAnswer(index) {
+                if (index === this.quizQuestions[this.quizStep].answer) {
+                    this.score += 20;
+                }
+                
+                if (this.quizStep < this.quizQuestions.length - 1) {
+                    this.quizStep++;
+                } else {
+                    this.activeTab = 'quiz-result';
+                }
+                this.render();
+            },
+
+            resetQuiz() {
+                this.quizStep = 0;
+                this.score = 0;
+                this.setActiveTab('quiz');
+            },
+
+            render() {
+                const container = document.getElementById('content');
+                let html = '';
+
+                switch (this.activeTab) {
+                    case 'intro':
+                        html = `
+                            <div class="space-y-8">
+                                <div class="text-center space-y-4">
+                                    <h2 class="text-3xl font-bold text-slate-800">기계에게 인간의 도덕을 가르칠 수 있을까?</h2>
+                                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                        인공지능은 감정이 없습니다. 오직 우리가 준 데이터와 알고리즘으로 세상을 배웁니다. 
+                                        그렇다면 AI가 내리는 결정은 정말 중립적일까요?
+                                    </p>
+                                    <div class="pt-4">
+                                        <button onclick="app.toggleModal(true)" class="inline-flex items-center gap-2 bg-white border-2 border-indigo-100 text-indigo-600 px-6 py-2.5 rounded-full font-bold hover:bg-indigo-50 hover:border-indigo-200 transition-all shadow-sm">
+                                            <i data-lucide="image" class="w-4 h-4"></i> 인포그래픽보기
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-3 gap-6">
+                                    <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-4"><i data-lucide="alert-triangle" class="text-amber-500"></i></div>
+                                        <h3 class="text-xl font-bold mb-2">AI의 편향성</h3>
+                                        <p class="text-slate-500">데이터에 숨겨진 인간의 편견이 AI를 통해 증폭됩니다.</p>
+                                    </div>
+                                    <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-4"><i data-lucide="scale" class="text-indigo-500"></i></div>
+                                        <h3 class="text-xl font-bold mb-2">윤리적 딜레마</h3>
+                                        <p class="text-slate-500">생사가 걸린 순간, 기계는 어떤 논리로 판단해야 할까요?</p>
+                                    </div>
+                                    <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                                        <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-4"><i data-lucide="users" class="text-emerald-500"></i></div>
+                                        <h3 class="text-xl font-bold mb-2">사회적 합의</h3>
+                                        <p class="text-slate-500">문화마다 다른 도덕적 가치를 어떻게 반영할 것인가의 문제입니다.</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center pt-8">
+                                    <button onclick="app.setActiveTab('bias')" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+                                        학습 시작하기 <i data-lucide="arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'bias':
+                        html = `
+                            <div class="space-y-8">
+                                <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100">
+                                    <h3 class="text-2xl font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                                        <i data-lucide="brain" class="text-indigo-600"></i> 인공지능은 완벽하게 중립적이지 않습니다
+                                    </h3>
+                                    <p class="text-indigo-800">AI는 스스로 판단하는 것이 아니라, 인간이 만든 데이터와 알고리즘에 기반해 학습합니다. 필연적으로 편향성을 가질 수밖에 없습니다.</p>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="p-8 bg-white rounded-3xl border-2 border-blue-100 shadow-sm">
+                                        <h4 class="text-2xl font-bold mb-6 text-blue-600">인간의 편향</h4>
+                                        <ul class="space-y-6">
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">발생 원인</span><span class="text-slate-700">경험, 문화, 교육, 사회적 환경</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">변경 가능성</span><span class="text-slate-700">시간과 경험에 따라 유연하게 변화 가능</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">인식 및 수정</span><span class="text-slate-700">스스로 인식하기 어렵지만 교육으로 수정 가능</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">영향력</span><span class="text-slate-700 font-medium">개인이나 특정 집단에 국한됨</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="p-8 bg-white rounded-3xl border-2 border-indigo-100 shadow-sm">
+                                        <h4 class="text-2xl font-bold mb-6 text-indigo-600">인공지능의 편향</h4>
+                                        <ul class="space-y-6">
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">발생 원인</span><span class="text-slate-700">학습 데이터와 알고리즘의 한계</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">변경 가능성</span><span class="text-slate-700">데이터/알고리즘 수정 전까지 동일 패턴 유지</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">인식 및 수정</span><span class="text-slate-700">결과 분석을 통해 인지하고 기술적으로 수정</span></li>
+                                            <li class="flex flex-col gap-1"><span class="text-sm font-bold text-slate-400 uppercase">영향력</span><span class="text-slate-700 font-medium">사회 전체 시스템에 광범위한 영향</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-12">
+                                    <button onclick="app.setActiveTab('intro')" class="flex items-center gap-2 text-slate-500 font-bold px-6 py-3 rounded-full hover:bg-slate-100 transition-colors">
+                                        <i data-lucide="arrow-left"></i> 이전으로
+                                    </button>
+                                    <button onclick="app.setActiveTab('trolley')" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors">
+                                        트롤리 딜레마 체험 <i data-lucide="arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'trolley':
+                        html = `
+                            <div class="space-y-8">
+                                <div class="text-center">
+                                    <h2 class="text-3xl font-bold text-slate-800 mb-4">트롤리 딜레마: 당신의 선택은?</h2>
+                                    <p class="text-slate-600">수학적 결과는 동일(5명 생존, 1명 사망)하지만, 인간의 직관은 다릅니다.</p>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="p-8 rounded-3xl border-2 transition-all cursor-pointer ${this.trolleyChoice === 'switch' ? 'border-indigo-500 bg-indigo-50 shadow-lg' : 'border-slate-100 bg-white hover:border-indigo-200'}" onclick="app.handleTrolleyChoice('switch')">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <span class="px-4 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold">사례 1</span>
+                                            ${this.trolleyChoice === 'switch' ? '<i data-lucide="check-circle-2" class="text-indigo-500"></i>' : ''}
+                                        </div>
+                                        <h3 class="text-xl font-bold mb-4">선로 전환기 (간접 개입)</h3>
+                                        <p class="text-slate-600 mb-6">열차 선로를 바꿔서 5명을 구하고, 옆 선로의 1명을 희생시킵니다.</p>
+                                        ${this.trolleyChoice === 'switch' ? `
+                                            <div class="mt-4 p-4 bg-white rounded-xl border border-indigo-100 animate-fade-in">
+                                                <p class="font-bold text-indigo-900">결과: 89%의 사람들이 찬성</p>
+                                                <p class="text-sm text-indigo-700">"피할 수 없는 희생이자 결과론적 이득으로 간주합니다."</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="p-8 rounded-3xl border-2 transition-all cursor-pointer ${this.trolleyChoice === 'bridge' ? 'border-rose-500 bg-rose-50 shadow-lg' : 'border-slate-100 bg-white hover:border-rose-200'}" onclick="app.handleTrolleyChoice('bridge')">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <span class="px-4 py-1 bg-rose-100 text-rose-700 rounded-full text-sm font-bold">사례 2</span>
+                                            ${this.trolleyChoice === 'bridge' ? '<i data-lucide="check-circle-2" class="text-rose-500"></i>' : ''}
+                                        </div>
+                                        <h3 class="text-xl font-bold mb-4">육교 위의 희생 (직접 개입)</h3>
+                                        <p class="text-slate-600 mb-6">5명을 구하기 위해 육교 위의 사람 1명을 내 손으로 직접 밀어 멈춥니다.</p>
+                                        ${this.trolleyChoice === 'bridge' ? `
+                                            <div class="mt-4 p-4 bg-white rounded-xl border border-rose-100 animate-fade-in">
+                                                <p class="font-bold text-rose-900">결과: 오직 11%만 찬성</p>
+                                                <p class="text-sm text-rose-700">"타인의 생명을 직접 이용하는 것에 강한 거부감을 느낍니다."</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800 text-white p-8 rounded-3xl flex flex-col md:flex-row items-center gap-6">
+                                    <i data-lucide="car" class="w-16 h-16 text-indigo-400"></i>
+                                    <div><h4 class="text-xl font-bold mb-2">이것은 이제 '현실'입니다.</h4><p class="text-slate-300">자율주행 자동차는 사고 직전 누구를 희생할지 결정해야 합니다. 우리는 기계에게 어떤 도덕을 입력해야 할까요?</p></div>
+                                </div>
+                                <div class="flex justify-between mt-12">
+                                    <button onclick="app.setActiveTab('bias')" class="flex items-center gap-2 text-slate-500 font-bold px-6 py-3 rounded-full hover:bg-slate-100 transition-colors"><i data-lucide="arrow-left"></i> 이전으로</button>
+                                    <button onclick="app.setActiveTab('priority')" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors">인류의 우선순위 <i data-lucide="arrow-right"></i></button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'priority':
+                        html = `
+                            <div class="space-y-8">
+                                <div class="text-center"><h2 class="text-3xl font-bold text-slate-800 mb-2">MIT 모럴 머신 프로젝트</h2><p class="text-slate-600">전 세계 230만 명의 선택 분석 결과</p></div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-600"><i data-lucide="check-circle-2"></i> 살려야 할 대상 Top 5</h3>
+                                        <div class="space-y-4">
+                                            ${["1위: 유모차를 끄는 사람", "2위: 소녀", "3위: 소년", "4위: 임신한 여성", "5위: 남성 의사"].map((item, i) => `
+                                                <div class="flex items-center gap-4 p-3 bg-emerald-50 rounded-xl font-bold text-emerald-800">
+                                                    <span class="w-8 h-8 bg-emerald-200 rounded-full flex items-center justify-center text-emerald-700">${i+1}</span>${item}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-slate-500"><i data-lucide="alert-triangle"></i> 가장 후순위</h3>
+                                        <div class="space-y-4 opacity-70">
+                                            ${["범죄자", "개", "고양이"].map((item, i) => `
+                                                <div class="flex items-center gap-4 p-3 bg-slate-50 rounded-xl font-bold text-slate-600">
+                                                    <span class="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-slate-500">${i+18}</span>${item}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-8 bg-indigo-600 text-white rounded-3xl">
+                                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-2"><i data-lucide="globe"></i> 문화적 차이 (Cultural Gap)</h3>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="bg-indigo-500/30 p-4 rounded-2xl"><h4 class="font-bold text-lg mb-2">북미 & 유럽</h4><p class="text-indigo-100">어린아이와 사회적 약자 보호 경향이 매우 높습니다.</p></div>
+                                        <div class="bg-indigo-500/30 p-4 rounded-2xl"><h4 class="font-bold text-lg mb-2">동양 & 이슬람권</h4><p class="text-indigo-100">노인이나 지위가 높은 사람 보호 비율이 상대적으로 높습니다.</p></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-12">
+                                    <button onclick="app.setActiveTab('trolley')" class="flex items-center gap-2 text-slate-500 font-bold px-6 py-3 rounded-full hover:bg-slate-100 transition-colors"><i data-lucide="arrow-left"></i> 이전으로</button>
+                                    <button onclick="app.setActiveTab('quiz')" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">학습 퀴즈 풀기 <i data-lucide="arrow-right"></i></button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'quiz':
+                        const q = this.quizQuestions[this.quizStep];
+                        html = `
+                            <div class="max-w-3xl mx-auto bg-white p-10 rounded-3xl border border-slate-100 shadow-xl">
+                                <div class="flex justify-between items-center mb-8">
+                                    <span class="text-indigo-600 font-bold uppercase tracking-widest text-sm">Question ${this.quizStep + 1} / ${this.quizQuestions.length}</span>
+                                    <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-indigo-500 transition-all duration-300" style="width: ${((this.quizStep + 1) / this.quizQuestions.length) * 100}%"></div>
+                                    </div>
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-800 mb-8 leading-relaxed">${q.question}</h3>
+                                <div class="space-y-4">
+                                    ${q.options.map((opt, i) => `
+                                        <button onclick="app.handleQuizAnswer(${i})" class="w-full text-left p-6 bg-slate-50 hover:bg-indigo-50 hover:border-indigo-300 border-2 border-transparent rounded-2xl transition-all group flex items-center justify-between">
+                                            <span class="text-lg text-slate-700 font-medium group-hover:text-indigo-800">${opt}</span>
+                                            <i data-lucide="check-circle-2" class="w-6 h-6 text-transparent group-hover:text-indigo-500"></i>
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'quiz-result':
+                        html = `
+                            <div class="max-w-3xl mx-auto text-center bg-white p-12 rounded-3xl shadow-xl border border-slate-100 space-y-8">
+                                <div class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="trophy" class="text-indigo-600 w-12 h-12"></i></div>
+                                <h2 class="text-4xl font-black text-slate-800">퀴즈 완료!</h2>
+                                <div class="text-6xl font-black text-indigo-600 mb-4">${this.score}점</div>
+                                <p class="text-xl text-slate-600 max-w-md mx-auto leading-relaxed">
+                                    ${this.score === 100 ? "축하합니다! 인공지능 윤리 마스터이시군요!" : "훌륭합니다! 인공지능 윤리에 대해 깊게 이해하게 되셨습니다."}
+                                </p>
+                                <button onclick="app.resetQuiz()" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:bg-indigo-700 transition-colors mx-auto">
+                                    <i data-lucide="rotate-ccw"></i> 다시 풀어보기
+                                </button>
+                                <div class="pt-8 border-t border-slate-100 mt-8">
+                                    <button onclick="app.setActiveTab('intro')" class="text-indigo-600 font-bold hover:underline">첫 페이지로 돌아가기</button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+
+                container.innerHTML = html;
+                lucide.createIcons(); // Re-render icons after DOM update
+            }
+        };
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
